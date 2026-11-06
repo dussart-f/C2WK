@@ -1,0 +1,68 @@
+<html><head><title>ISR-RESA / Network your way out of the cave / 10 - Modern cave</title><link rel="stylesheet" href="https://dl.etna-alternance.net/sujets/prism.css"><link rel="stylesheet" href="https://dl.etna-alternance.net/sujets/sujet.css"><script type="text/javascript" src="https://dl.etna-alternance.net/sujets/prism.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script><script type="text/javascript" src="https://kit.fontawesome.com/2128552f47.js"></script><meta charset="UTF-8"></head><body><div class="panel-heading panel-header">ISR-RESA / Network your way out of the cave / 10 - Modern cave</div><div class="panel-heading panel-module">Modalités</div><div class="panel-body"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VM</td>
+<td>Votre VM <strong>C2WK-GNS3</strong> créée dans ETNA Cloud</td>
+</tr>
+<tr>
+<td>project</td>
+<td>step-10</td>
+</tr>
+<tr>
+<td>Correction</td>
+<td>Demande de validation</td>
+</tr>
+<tr>
+<td>Durée</td>
+<td>1 semaine</td>
+</tr>
+<tr>
+<td>Effectif</td>
+<td>Seul</td>
+</tr>
+<tr>
+<td>Environnement</td>
+<td>GNS3</td>
+</tr>
+<tr><td>Rendu</td><td>$$RENDU$$</td></tr></tbody></table>
+</div><div class="panel-heading panel-objective">Objectifs</div><div class="panel-body"><p>Configurer des VLANs dans un réseau complexe</p>
+</div><div class="panel-heading panel-info">Equipement nécesaire</div><div class="panel-body"><ul>
+<li>2 VPC</li>
+<li>1 router c3725</li>
+<li>1 switch</li>
+</ul>
+</div><div class="panel-heading undefined">Consignes</div><div class="panel-body"><p>Configurer <strong>R1</strong> :</p>
+<ul>
+<li>une interface avec:<br>&nbsp;- un <strong>VLAN</strong> 10 pour le sous-réseau <code>192.168.1.0\24</code> qui a pour adresse ip <code>192.168.1.254</code><br>&nbsp;- un <strong>VLAN</strong> 20 pour le sous-réseau <code>172.16.0.0\16</code> qui a pour adresse ip <code>172.16.255.254</code></li>
+</ul>
+<p>Configurer <strong>PC1</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-réseau <code>192.168.1.0/24</code></li>
+<li>doit avoir comme adresse ip : <code>192.168.1.11</code></li>
+</ul>
+<p>Configurer <strong>PC2</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-réseau <code>172.16.0.0/16</code></li>
+<li>doit avoir comme adresse ip : <code>172.16.1.12</code></li>
+</ul>
+<p>Configurer <strong>Switch 1</strong>:</p>
+<ul>
+<li>la connexion a <strong>R1</strong> soit un "trunk" sur le VLAN 100</li>
+<li>la connexion a <strong>PC1</strong> soit un acces au VLAN 10</li>
+<li>la connexion a <strong>PC2</strong> soit un acces au VLAN 20</li>
+</ul>
+</div><div class="panel-heading undefined">Evaluation</div><div class="panel-body"><ul>
+<li><strong>PC1</strong>, <strong>PC2</strong> doivent pouvoir se ping mutuellement</li>
+</ul>
+</div><div class="panel-heading panel-info">Indices</div><div class="panel-body"><p>Un VLAN (pour Virtual LAN) est un réseau indépendant capable de coexister aupres d'autre sur un même switch<br>Pour fonctionner il faut pouvoir au travers d'une unique connexion pouvoir identifier a quel VLAN apartien une "trame". cette connexion s'appelle "lien marqué" ou lien "trunk" chez les constructer CISCO et autres et suit la norme "802.1Q (dot1q)"</p>
+<div class="panel-heading panel-question">Switch &amp; Router Vs Switch multicouche</div><div class="panel-body"><p>On a vu précedement que les switch intervenait sur la couche 2 et les router sur la couche 3 du modèle <a target="_blank" href="https://fr.wikipedia.org/wiki/Mod%C3%A8le_OSI" title="null">OSI</a></p>
+<p>Il existe cependant des switch capable d'agir sur la couche 2 et 3 réduisant le besoin de configurer 2 équipements à 1 pour faire des VLANs par exemple.</p>
+<p>Pour ce quest vous devrez configurer vos VLANs a l'aide de switch standard et router, mais sachez que ce genre d'équipement existe.</p>
+</div><div class="panel-heading undefined">Rendu</div><div class="panel-body"><p>Déposez un screenshot de votre topologie GNS3 montrant le résultat du ping de <strong>PC1</strong> vers <strong>PC2</strong> dans le dossier <code>10 - modern-cave/</code> de votre dépôt git avant de faire votre demande de validation sur l'intranet.</p></div><div class="panel-heading panel-warning">Attention</div><div class="panel-body"><p>Pensez à bien sauvegarder vos configurations.</p>
+</div><div class="panel-heading panel-question">But old habits die hard, and the idea of a comforting cave comes to mind</div><div class="panel-body"><p><em>Do you believe that our liberated man would be much concerned with such honors, or that he would be jealous of those who received them? Or that he would strive to be like those who were lauded by the captives and enjoyed pride of place among them?</em></p>
+</div></body></html>

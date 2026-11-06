@@ -1,0 +1,89 @@
+<html><head><title>ISR-RESA / Network your way out of the cave / 2 - Partition</title><link rel="stylesheet" href="https://dl.etna-alternance.net/sujets/prism.css"><link rel="stylesheet" href="https://dl.etna-alternance.net/sujets/sujet.css"><script type="text/javascript" src="https://dl.etna-alternance.net/sujets/prism.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script><script type="text/javascript" src="https://kit.fontawesome.com/2128552f47.js"></script><meta charset="UTF-8"></head><body><hr>
+<div class="panel-heading panel-header">ISR-RESA / Network your way out of the cave / 2 - Partition</div><div class="panel-heading panel-module">Modalités</div><div class="panel-body"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VM</td>
+<td>Votre VM <strong>C2WK-GNS3</strong> créée dans ETNA Cloud</td>
+</tr>
+<tr>
+<td>project</td>
+<td>step-2</td>
+</tr>
+<tr>
+<td>Correction</td>
+<td>Demande de validation</td>
+</tr>
+<tr>
+<td>Durée</td>
+<td>1 semaine</td>
+</tr>
+<tr>
+<td>Effectif</td>
+<td>Seul</td>
+</tr>
+<tr>
+<td>Environnement</td>
+<td>GNS3</td>
+</tr>
+<tr><td>Rendu</td><td>$$RENDU$$</td></tr></tbody></table>
+</div><div class="panel-heading panel-objective">Objectifs</div><div class="panel-body"><p>Vous devez connecter et faire communiquer 2 machines dans 3 sous-réseaux différent<br>Pour cela vous allez configurer 2 router c3725 a l'aide du protocol <code>OSPF</code></p>
+</div><div class="panel-heading panel-info">Equipement nécesaire</div><div class="panel-body"><ul>
+<li>2 VPCs</li>
+<li>2 router c3725</li>
+</ul>
+</div><div class="panel-heading undefined">Consignes</div><div class="panel-body"><p>Configurer <strong>R1</strong> :</p>
+<ul>
+<li>il doit router les paquets du sous-réseau <code>192.168.1.0/24</code> vers <code>10.0.0.0/24</code> et inversement</li>
+<li>son interface dans le sous-reseau <code>192.168.1.0/24</code> ait l'adresse ip : <code>192.168.1.254</code></li>
+<li>son interface dans le sous-reseau <code>10.0.0.0/24</code> ait l'adresse ip : <code>10.0.0.1</code></li>
+</ul>
+<p>Configurer <strong>R2</strong> :</p>
+<ul>
+<li>il doit router les paquets du sous-réseau <code>172.16.1.0/24</code> vers <code>10.0.0.0/24</code> et inversement</li>
+<li>son interface dans le sous-reseau <code>172.16.1.0/24</code> ait l'adresse ip : <code>172.16.1.254</code></li>
+<li>son interface dans le sous-reseau <code>10.0.0.0/24</code> ait l'adresse ip : <code>10.0.0.2</code></li>
+</ul>
+<p>Configurer <strong>PC1</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-reseau <code>192.168.1.0/24</code></li>
+<li>doit avoir comme addresse ip : <code>192.168.1.10</code></li>
+</ul>
+<p>Configurer <strong>PC2</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-reseau <code>172.16.1.0/24</code></li>
+<li>doit avoir comme addresse ip : <code>172.16.1.10</code></li>
+</ul>
+</div><div class="panel-heading undefined">Evaluation</div><div class="panel-body"><ul>
+<li><strong>R1</strong> doit pouvoir ping <strong>R2</strong> sur son interface dans le sous-réseau <code>10.0.0.0/24</code> et inversement</li>
+<li><strong>PC1</strong> doit pouvoir ping <strong>PC2</strong> et inversement</li>
+</ul>
+</div><div class="panel-heading panel-info">Indices</div><div class="panel-body"><p>OSFP est un protocole servant à déterminer le meilleur chemin que peuvent emprunter des paquets pour transiter par une série de réseaux connectés. Il existe d'autre protocole similaire mais c'est celui-ci que vous utiliserez pour vos étapes.<br>Pas besoin de comprendre parfaitement ce protocole, familiarisez vous simplement avec les quelques commandes de configurations requise ce sera amplement suffisant pour cet introduction.</p>
+<p>Vocabulaire important:</p>
+<ul>
+<li>interface</li>
+<li>gateway</li>
+<li>masque de sous-reseau</li>
+<li>masque inverse (wildcard mask)</li>
+<li>loopback</li>
+</ul>
+<p>Commandes router c3725:</p>
+<ul>
+<li><code>config terminal</code></li>
+<li><code>interface</code></li>
+<li><code>ip address</code></li>
+<li><code>router ospf 1</code></li>
+<li><code>network</code></li>
+<li><code>show ip interface brief</code></li>
+<li><code>show ip route</code></li>
+<li><code>show ip protocols</code></li>
+<li><code>show ip ospf neighbor</code></li>
+</ul>
+<p>N'oubliez pas de configurer l'interface loopback de vos router</p>
+</div><div class="panel-heading undefined">Rendu</div><div class="panel-body"><p>Déposez un screenshot de votre topologie GNS3 montrant le résultat du ping de <strong>PC1</strong> vers <strong>PC2</strong> dans le dossier <code>2 - partition/</code> de votre dépôt git avant de faire votre demande de validation sur l'intranet.</p></div><div class="panel-heading panel-warning">Sauvegarder votre configuration</div><div class="panel-body"><p>Lorsque vos router démarrent, leur configuration revient à celle par défaut<br>Pour sauvegarder votre travail et pouvoir le présenter pour evaluation, n'oublier pas d'effectuer la commande <code>copy running-config startup-config</code> pour garder vos configurations au démarage</p>
+</div><div class="panel-heading panel-question">let them speak from each side of the partition</div><div class="panel-body"><p><em>Look and you will also see other people carrying objects back and forth along the partition, things of every kind: images of people and animals, carved in stone and wood and other materials. Some of these other people speak, while others remain silent</em></p>
+</div></body></html>

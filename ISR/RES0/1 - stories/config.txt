@@ -1,0 +1,7 @@
+!Config PC1
+ip 192.168.1.1/24
+save
+
+!Config PC2
+ip 192.168.1.2/24
+save

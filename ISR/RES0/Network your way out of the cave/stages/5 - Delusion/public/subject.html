@@ -1,0 +1,92 @@
+<html><head><title>ISR-RESA / Network your way out of the cave / 5 - Delusion</title><link rel="stylesheet" href="https://dl.etna-alternance.net/sujets/prism.css"><link rel="stylesheet" href="https://dl.etna-alternance.net/sujets/sujet.css"><script type="text/javascript" src="https://dl.etna-alternance.net/sujets/prism.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script><script type="text/javascript" src="https://kit.fontawesome.com/2128552f47.js"></script><meta charset="UTF-8"></head><body><div class="panel-heading panel-header">ISR-RESA / Network your way out of the cave / 5 - Delusion</div><div class="panel-heading panel-module">Modalités</div><div class="panel-body"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VM</td>
+<td>Votre VM <strong>C2WK-GNS3</strong> créée dans ETNA Cloud</td>
+</tr>
+<tr>
+<td>project</td>
+<td>step-5</td>
+</tr>
+<tr>
+<td>Correction</td>
+<td>Demande de validation</td>
+</tr>
+<tr>
+<td>Durée</td>
+<td>1 semaine</td>
+</tr>
+<tr>
+<td>Effectif</td>
+<td>Seul</td>
+</tr>
+<tr>
+<td>Environnement</td>
+<td>GNS3</td>
+</tr>
+<tr><td>Rendu</td><td>$$RENDU$$</td></tr></tbody></table>
+</div><div class="panel-heading panel-objective">Objectifs</div><div class="panel-body"><p>connecter un réseau, composé de plusieurs sous-réseaux à internet</p>
+</div><div class="panel-heading panel-info">Equipement nécesaire</div><div class="panel-body"><ul>
+<li>4 VPC</li>
+<li>3 router c3725</li>
+<li>3 switch</li>
+<li>1 NAT</li>
+</ul>
+</div><div class="panel-heading undefined">Consignes</div><div class="panel-body"><p>Configurer <strong>R1</strong> :</p>
+<ul>
+<li>il doit récuperer une address ip en <strong>DHCP</strong> pour son interfacce connecter au NAT</li>
+<li>il doit router les paquets du sous-réseau <code>192.168.1.0/24</code> a internet</li>
+<li>il doit router les paquets du sous-réseau <code>172.16.0.0/16</code> a internet</li>
+<li>il doit router les paquets du sous-réseau <code>10.0.0.0/24</code> a internet</li>
+<li>son interface dans le sous-réseau <code>10.0.0.0/24</code> ait l'addresse ip : <code>10.0.0.254</code></li>
+</ul>
+<p>Configurer <strong>R2</strong> :</p>
+<ul>
+<li>il doit router les paquets du sous-réseau <code>192.168.1.0/24</code> vers <code>10.0.0.0/24</code> et inversement</li>
+<li>son interface dans le sous-reseau <code>192.168.1.0/24</code> ait l'adresse ip : <code>192.168.1.254</code></li>
+<li>son interface dans le sous-reseau <code>10.0.0.0/24</code> ait l'adresse ip : <code>10.0.0.2</code></li>
+</ul>
+<p>Configurer <strong>R3</strong> :</p>
+<ul>
+<li>il doit router les paquets du sous-réseau <code>172.16.0.0/16</code> vers <code>10.0.0.0/24</code> et inversement</li>
+<li>son interface dans le sous-reseau <code>172.16.0.0/16</code> ait l'adresse ip : <code>172.16.255.254</code></li>
+<li>son interface dans le sous-reseau <code>10.0.0.0/24</code> ait l'adresse ip : <code>10.0.0.3</code></li>
+</ul>
+<p>Configurer <strong>PC1</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-réseau <code>192.168.1.0/24</code></li>
+<li>doit avoir comme addresse ip : <code>192.168.1.11</code></li>
+</ul>
+<p>Configurer <strong>PC2</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-réseau <code>192.168.1.0/24</code></li>
+<li>doit avoir comme addresse ip : <code>192.168.1.12</code></li>
+</ul>
+<p>Configurer <strong>PC3</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-réseau <code>171.16.0.0/16</code></li>
+<li>doit avoir comme addresse ip : <code>172.16.1.13</code></li>
+</ul>
+<p>Configurer <strong>PC4</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-réseau <code>172.16.0.0/16</code></li>
+<li>doit avoir comme addresse ip : <code>172.16.1.14</code></li>
+</ul>
+</div><div class="panel-heading undefined">Evaluation</div><div class="panel-body"><ul>
+<li><strong>R1</strong>, <strong>R2</strong>, <strong>R3</strong> doivent pouvoir ping internet sur <code>8.8.8.8</code></li>
+<li><strong>PC1</strong>, <strong>PC2</strong>, <strong>PC3</strong>, <strong>PC4</strong> doivent pouvoir ping internet sur <code>8.8.8.8</code></li>
+<li><strong>PC1</strong>, <strong>PC2</strong>, <strong>PC3</strong>, <strong>PC4</strong> doivent pouvoir se ping mutuellement</li>
+</ul>
+</div><div class="panel-heading panel-info">Indices</div><div class="panel-body">
+<p>Par défaut le router n'autorise aucun traffic pour rentrer ou sortir du réseau<br>vous devez donc configurer le router pour autoriser le traffic entrant et sortant.</p>
+<p>ajouter ces instructions a la configuration de votre router (en considerant fa0/0 comme interface connecter au NAT):</p>
+<div class="code-toolbar"><pre class=" language-markup"><code class=" language-markup">R1(config)#access-list 10 permit any
+R1(config)#ip nat source list 10 int fa0/0 overload</code></pre><div class="toolbar"><div class="toolbar-item"><button>Copy</button></div></div></div><p>Pas la peine de trop vous attarder dessus, vous aurez pleinement l'occasion de découvrir et manipuler les listes d'accès dans les étapes suivantes.</p>
+</div><div class="panel-heading undefined">Rendu</div><div class="panel-body"><p>Déposez un screenshot de votre topologie GNS3 montrant les résultats des pings de <strong>PC1</strong> vers <code>8.8.8.8</code> et de <strong>PC1</strong> vers <strong>PC4</strong> dans le dossier <code>5 - delusion/</code> de votre dépôt git avant de faire votre demande de validation sur l'intranet.</p></div><div class="panel-heading panel-warning">Attention</div><div class="panel-body"><p>Pensez à bien sauvegarder vos configurations.</p>
+</div><div class="panel-heading panel-question">let him show his kin the wonders he saw</div><div class="panel-body"><p><em>What do you think his reaction would be if someone informed him that everything he had formerly known was illusion and delusion, but that now he was a few steps closer to reality,</em></p>
+</div></body></html>

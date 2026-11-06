@@ -1,0 +1,38 @@
+!Config R1
+configure terminal
+
+! 1. Activer l'interface physique principale
+interface FastEthernet0/0
+ no shutdown
+exit
+
+! 2. Sous-interface pour le VLAN 10 (192.168.1.0/24)
+interface FastEthernet0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.1.254 255.255.255.0
+exit
+
+! 3. Sous-interface pour le VLAN 20 (172.16.0.0/16)
+interface FastEthernet0/0.20
+ encapsulation dot1Q 20
+ ip address 172.16.255.254 255.255.0.0
+exit
+
+end
+write
+
+!Config PC1
+ip 192.168.1.11/24 192.168.1.254
+save
+
+!Config PC2
+ip 172.16.1.12/16 172.16.255.254
+save
+
+!Config PC3
+ip 192.168.1.13/24 192.168.1.254
+save
+
+!Config PC4
+ip 172.16.1.14/16 172.16.255.254
+save

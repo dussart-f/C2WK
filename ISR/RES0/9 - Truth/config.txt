@@ -1,0 +1,91 @@
+!Config R1
+configure terminal
+
+! 1. Interface connectée au réseau central (10.0.0.0/24)
+interface FastEthernet0/0
+ ip address 10.0.0.254 255.255.255.0
+ no shutdown
+exit
+
+! 2. Routes statiques pour atteindre les réseaux distants via R2 et R3
+ip route 192.168.1.0 255.255.255.0 10.0.0.2
+ip route 172.16.0.0 255.255.0.0 10.0.0.3
+
+! 3. Exclusions d'adresses pour le sous-réseau 192.168.1.0/24
+ip dhcp excluded-address 192.168.1.1 192.168.1.9
+ip dhcp excluded-address 192.168.1.51 192.168.1.254
+
+! 4. Pool DHCP pour le sous-réseau 192.168.1.0/24
+ip dhcp pool POOL_PC1_PC2
+ network 192.168.1.0 255.255.255.0
+ default-router 192.168.1.254
+ dns-server 8.8.8.8
+exit
+
+! 5. Exclusions d'adresses pour le sous-réseau 172.16.0.0/16
+ip dhcp excluded-address 172.16.0.1 172.16.1.9
+ip dhcp excluded-address 192.168.1.51 192.168.1.254
+
+! 6. Pool DHCP pour le sous-réseau 172.16.0.0/16
+ip dhcp pool POOL_PC3_PC4
+ network 172.16.0.0 255.255.0.0
+ default-router 172.16.255.254
+ dns-server 8.8.8.8
+exit
+
+end
+write
+
+!Config R2
+configure terminal
+
+! Interface vers le réseau central
+interface FastEthernet0/0
+ ip address 10.0.0.2 255.255.255.0
+ no shutdown
+exit
+
+! Interface vers le sous-réseau local des PC1 et PC2 + Relais DHCP
+interface FastEthernet0/1
+ ip address 192.168.1.254 255.255.255.0
+ ip helper-address 10.0.0.254
+ no shutdown
+exit
+
+! Route par défaut vers R1
+ip route 0.0.0.0 0.0.0.0 10.0.0.254
+end
+write
+
+!Config R3
+configure terminal
+
+! Interface vers le réseau central
+interface FastEthernet0/0
+ ip address 10.0.0.3 255.255.255.0
+ no shutdown
+exit
+
+! Interface vers le sous-réseau local des PC3 et PC4 + Relais DHCP
+interface FastEthernet0/1
+ ip address 172.16.255.254 255.255.0.0
+ ip helper-address 10.0.0.254
+ no shutdown
+exit
+
+! Route par défaut vers R1
+ip route 0.0.0.0 0.0.0.0 10.0.0.254
+end
+write
+
+!Config PC1
+ip dhcp
+
+!Config PC2
+ip dhcp
+
+!Config PC3
+ip dhcp
+
+!Config PC4
+ip dhcp

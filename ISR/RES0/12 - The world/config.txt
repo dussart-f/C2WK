@@ -1,0 +1,123 @@
+!config R1
+configure terminal
+
+! 1. Interface WAN vers le NAT
+interface FastEthernet0/0
+ ip address dhcp
+ ip nat outside
+ no ip route-cache
+ no shutdown
+ exit
+
+! 2. Interface LAN principale
+ interface FastEthernet0/1
+ ip address 10.0.0.1 255.255.255.0
+ no ip route-cache
+ ip nat inside
+ no shutdown
+ exit
+
+! 3. Configuration DHCP
+! Exclusion des adresses statiques/passerelles
+ip dhcp excluded-address 10.0.0.1 10.0.0.10
+ip dhcp excluded-address 172.16.0.1 172.16.0.10
+ip dhcp excluded-address 192.168.1.1 192.168.1.10
+ip dhcp excluded-address 192.168.2.1 192.168.2.10
+ip dhcp excluded-address 192.168.10.1 192.168.10.10
+
+! Pool pour le Staff (172.16.0.0/16)
+ip dhcp pool POOL-STAFF
+ network 172.16.0.0 255.255.0.0
+ default-router 172.16.0.1
+ exit
+
+! Pool pour Student-A (192.168.1.0/24)
+ip dhcp pool POOL-STUDENT-A
+ network 192.168.1.0 255.255.255.0
+ default-router 192.168.1.1
+ exit
+
+! Pool pour Student-B (192.168.2.0/24)
+ip dhcp pool POOL-STUDENT-B
+ network 192.168.2.0 255.255.255.0
+ default-router 192.168.2.1
+ exit
+
+!Pool pour Student-Punis (ex: 192.168.10.0/24)
+ip dhcp pool POOL-PUNIS
+ network 192.168.10.0 255.255.255.0
+ default-router 192.168.10.1
+ exit
+
+! 4. Liste d'accès 10 :
+access-list 10 deny 192.168.10.0 0.0.0.255
+access-list 10 permit 172.16.0.0 0.0.255.255
+access-list 10 permit 192.168.1.0 0.0.0.255
+access-list 10 permit 192.168.2.0 0.0.0.255
+access-list 10 permit 10.0.0.0 0.0.0.255
+
+! Application du NAT basé sur l'ACL 10
+ip nat inside source list 10 interface FastEthernet0/0 overload
+
+! 3. Routes statiques
+ip route 0.0.0.0 0.0.0.0 192.168.122.1
+ip route 172.16.0.0 255.255.0.0 10.0.0.2
+ip route 192.168.1.0 255.255.255.0 10.0.0.2
+ip route 192.168.2.0 255.255.255.0 10.0.0.2
+ip route 192.168.10.0 255.255.255.0 10.0.0.2
+
+end
+write
+
+!config R2
+configure terminal
+
+! 1. Interface WAN  R1
+interface FastEthernet0/0
+ ip address 10.0.0.2 255.255.255.0
+ no shutdown
+ exit
+
+! 2. Interface LAN
+interface FastEthernet0/1
+ no shutdown
+ exit
+
+! 3. Config VLAN
+! VLAN Staff (VLAN 10)
+interface FastEthernet0/1.10
+ encapsulation dot1Q 10
+ ip address 172.16.0.1 255.255.0.0
+ ip helper-address 10.0.0.1
+ exit
+
+! VLAN Student-A (VLAN 20)
+interface FastEthernet0/1.20
+ encapsulation dot1Q 20
+ ip address 192.168.1.1 255.255.255.0
+ ip helper-address 10.0.0.1
+ exit
+
+! VLAN Student-B (VLAN 30)
+interface FastEthernet0/1.30
+ encapsulation dot1Q 30
+ ip address 192.168.2.1 255.255.255.0
+ ip helper-address 10.0.0.1
+ exit
+
+! VLAN Student-Punis (VLAN 40)
+interface FastEthernet0/1.40
+ encapsulation dot1Q 40
+ ip address 192.168.10.1 255.255.255.0
+ ip helper-address 10.0.0.1
+ exit
+
+! Route par défaut vers R1
+ip route 0.0.0.0 0.0.0.0 10.0.0.1
+
+end
+write
+
+
+!config all VPC
+ip dhcp

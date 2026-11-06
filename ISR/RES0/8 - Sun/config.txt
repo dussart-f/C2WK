@@ -1,0 +1,30 @@
+!Config R1
+configure terminal
+
+! 1. Configuration de l'interface réseau locale
+interface FastEthernet0/0
+ ip address 192.168.1.254 255.255.255.0
+ no shutdown
+exit
+
+! 2. Exclure les adresses de 192.168.1.1 à 192.168.1.9 et 192.168.1.51 à 192.168.1.253
+ip dhcp excluded-address 192.168.1.1 192.168.1.9
+ip dhcp excluded-address 192.168.1.51 192.168.1.253
+ip dhcp excluded-address 192.168.1.254
+
+! 3. Création du pool DHCP pour la plage 192.168.1.10 à 192.168.1.50
+ip dhcp pool RESEAU_LAN
+ network 192.168.1.0 255.255.255.0
+ default-router 192.168.1.254
+ dns-server 8.8.8.8
+exit
+end
+write
+
+!Config PC1
+ip dhcp
+save
+
+!Config PC2
+ip dhcp
+save

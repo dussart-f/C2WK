@@ -1,0 +1,59 @@
+<html><head><title>ISR-RESA / Network your way out of the cave / 8 - Sun</title><link rel="stylesheet" href="https://dl.etna-alternance.net/sujets/prism.css"><link rel="stylesheet" href="https://dl.etna-alternance.net/sujets/sujet.css"><script type="text/javascript" src="https://dl.etna-alternance.net/sujets/prism.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script><script type="text/javascript" src="https://kit.fontawesome.com/2128552f47.js"></script><meta charset="UTF-8"></head><body><div class="panel-heading panel-header">ISR-RESA / Network your way out of the cave / 8 - Sun</div><div class="panel-heading panel-module">Modalités</div><div class="panel-body"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VM</td>
+<td>Votre VM <strong>C2WK-GNS3</strong> créée dans ETNA Cloud</td>
+</tr>
+<tr>
+<td>project</td>
+<td>step-8</td>
+</tr>
+<tr>
+<td>Correction</td>
+<td>Demande de validation</td>
+</tr>
+<tr>
+<td>Durée</td>
+<td>1 semaine</td>
+</tr>
+<tr>
+<td>Effectif</td>
+<td>Seul</td>
+</tr>
+<tr>
+<td>Environnement</td>
+<td>GNS3</td>
+</tr>
+<tr><td>Rendu</td><td>$$RENDU$$</td></tr></tbody></table>
+</div><div class="panel-heading panel-objective">Objectifs</div><div class="panel-body"><p>Configurer un server DHCP et recuperer des adresses ip dynamiquement.</p>
+</div><div class="panel-heading panel-info">Equipement nécesaire</div><div class="panel-body"><ul>
+<li>2 VPC</li>
+<li>1 router c3725</li>
+<li>1 switch</li>
+</ul>
+</div><div class="panel-heading undefined">Consignes</div><div class="panel-body"><p>Configurer <strong>R1</strong> :</p>
+<ul>
+<li>son interface dans le sous-réseau <code>192.168.1.0/24</code> ait l'addresse ip : <code>192.168.1.254</code></li>
+<li>un server DHCP qui :<br>&nbsp;- distribue des ip dans la range <code>192.168.1.10 - 192.168.1.50</code> pour le sous-réseau <code>192.168.1.0/24</code></li>
+</ul>
+<p>Configurer <strong>PC1</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-réseau <code>192.168.1.0/24</code></li>
+<li>doit recuperer son adresse ip en <strong>DHCP</strong></li>
+</ul>
+<p>Configurer <strong>PC2</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-réseau <code>192.168.1.0/24</code></li>
+<li>doit recuperer son adress ip en <strong>DHCP</strong></li>
+</ul>
+</div><div class="panel-heading undefined">Evaluation</div><div class="panel-body"><ul>
+<li><strong>PC1</strong> et <strong>PC2</strong> doivent pouvoir se ping mutuellement</li>
+</ul>
+</div><div class="panel-heading undefined">Rendu</div><div class="panel-body"><p>Déposez un screenshot de votre topologie GNS3 montrant l'adresse ip obtenue en DHCP par <strong>PC1</strong> et <strong>PC2</strong> ainsi que le résultat du ping entre eux dans le dossier <code>8 - sun/</code> de votre dépôt git avant de faire votre demande de validation sur l'intranet.</p></div><div class="panel-heading panel-warning">Attention</div><div class="panel-body"><p>Pensez à bien sauvegarder vos configurations.</p>
+</div><div class="panel-heading panel-question">Bask in the sun's glory for he will show the way to wisdom</div><div class="panel-body"><p><em>He will find that the sun is the source or the seasons and the years, and governor of every visible thing, and is ultimately the origin of everything previously known.</em></p>
+</div></body></html>

@@ -1,0 +1,29 @@
+!config R1
+configure terminal
+
+! 1. Configuration de l'interface connectée au NAT (récupération IP en DHCP)
+interface FastEthernet0/0
+ ip address dhcp
+ ip nat outside
+ no shutdown
+exit
+
+! 2. Configuration de l'interface connectée au réseau local (PC1)
+interface FastEthernet0/1
+ ip address 192.168.1.254 255.255.240.0
+ ip nat inside
+ no shutdown
+exit
+
+! 3. Configuration de la NAT (PAT) pour le sous-réseau 192.168.0.0/20
+access-list 1 permit 192.168.0.0 0.0.15.255
+ip nat inside source list 1 interface FastEthernet0/0 overload
+
+! 4. Route par défaut vers Internet via l'interface WAN
+ip route 0.0.0.0 0.0.0.0 FastEthernet0/0
+end
+write
+
+!Config PC1
+ip 192.168.1.10/20 192.168.1.254
+save

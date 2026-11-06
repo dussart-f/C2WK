@@ -1,0 +1,81 @@
+<html><head><title>ISR-RESA / Network your way out of the cave / 11 - Cohabitation</title><link rel="stylesheet" href="https://dl.etna-alternance.net/sujets/prism.css"><link rel="stylesheet" href="https://dl.etna-alternance.net/sujets/sujet.css"><script type="text/javascript" src="https://dl.etna-alternance.net/sujets/prism.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script><script type="text/javascript" src="https://kit.fontawesome.com/2128552f47.js"></script><meta charset="UTF-8"></head><body><div class="panel-heading panel-header">ISR-RESA / Network your way out of the cave / 11 - Cohabitation</div><div class="panel-heading panel-module">Modalités</div><div class="panel-body"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VM</td>
+<td>Votre VM <strong>C2WK-GNS3</strong> créée dans ETNA Cloud</td>
+</tr>
+<tr>
+<td>project</td>
+<td>step-11</td>
+</tr>
+<tr>
+<td>Correction</td>
+<td>Demande de validation</td>
+</tr>
+<tr>
+<td>Durée</td>
+<td>1 semaine</td>
+</tr>
+<tr>
+<td>Effectif</td>
+<td>Seul</td>
+</tr>
+<tr>
+<td>Environnement</td>
+<td>GNS3</td>
+</tr>
+<tr><td>Rendu</td><td>$$RENDU$$</td></tr></tbody></table>
+</div><div class="panel-heading panel-objective">Objectifs</div><div class="panel-body"><p>Configurer des VLANs dans un réseau complexe</p>
+</div><div class="panel-heading panel-info">Equipement nécesaire</div><div class="panel-body"><ul>
+<li>4 VPC</li>
+<li>1 router c3725</li>
+<li>2 switch</li>
+</ul>
+</div><div class="panel-heading undefined">Consignes</div><div class="panel-body"><p>Configurer <strong>R1</strong> :</p>
+<ul>
+<li>une interface avec:<br>&nbsp;- un <strong>VLAN</strong> 10 pour le sous-réseau <code>192.168.1.0\24</code> qui a pour adresse ip <code>192.168.1.254</code><br>&nbsp;- un <strong>VLAN</strong> 20 pour le sous-réseau <code>172.16.0.0\16</code> qui a pour adresse ip <code>172.16.255.254</code></li>
+</ul>
+<p>Configurer <strong>PC1</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-réseau <code>192.168.1.0/24</code></li>
+<li>doit avoir comme adresse ip : <code>192.168.1.11</code></li>
+</ul>
+<p>Configurer <strong>PC2</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-réseau <code>172.16.0.0/16</code></li>
+<li>doit avoir comme adresse ip : <code>172.16.1.12</code></li>
+</ul>
+<p>Configurer <strong>PC3</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-réseau <code>192.168.1.0/24</code></li>
+<li>doit avoir comme adresse ip : <code>192.168.1.13</code></li>
+</ul>
+<p>Configurer <strong>PC4</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-réseau <code>172.16.0.0/16</code></li>
+<li>doit avoir comme adresse ip : <code>172.16.1.14</code></li>
+</ul>
+<p>Configurer sur <strong>Switch 1</strong>:</p>
+<ul>
+<li>la connexion a <strong>R1</strong> soit un "trunk" sur le VLAN 100</li>
+<li>la connexion a <strong>PC1</strong> soit un acces au VLAN 10</li>
+<li>la connexion a <strong>PC2</strong> soit un acces au VLAN 20</li>
+<li>la connexion a <strong>Switch 2</strong></li>
+</ul>
+<p>Configurer sur <strong>Switch 2</strong>:</p>
+<ul>
+<li>la connexion a <strong>PC3</strong> soit un acces au VLAN 10</li>
+<li>la connexion a <strong>PC4</strong> soit un acces au VLAN 20</li>
+<li>la connexion a <strong>Switch 1</strong></li>
+</ul>
+</div><div class="panel-heading undefined">Evaluation</div><div class="panel-body"><ul>
+<li><strong>PC1</strong>, <strong>PC2</strong>, <strong>PC3</strong>, <strong>PC4</strong>, doivent pouvoir se ping mutuellement</li>
+</ul>
+</div><div class="panel-heading undefined">Rendu</div><div class="panel-body"><p>Déposez un screenshot de votre topologie GNS3 montrant le résultat du ping entre tous les PCs (par exemple <strong>PC1</strong> vers <strong>PC4</strong>) dans le dossier <code>11 - cohabitation/</code> de votre dépôt git avant de faire votre demande de validation sur l'intranet.</p></div><div class="panel-heading panel-warning">Attention</div><div class="panel-body"><p>Pensez à bien sauvegarder vos configurations.</p>
+</div><div class="panel-heading panel-question">Though the knowledge of the rest of the world is not so easily dismissed</div><div class="panel-body"><p><em>Truly, he would rather suffer a great deal than return to such a life.</em></p>
+</div></body></html>

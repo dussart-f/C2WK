@@ -1,0 +1,80 @@
+<html><head><title>ISR-RESA / Network your way out of the cave / 9 - Truth</title><link rel="stylesheet" href="https://dl.etna-alternance.net/sujets/prism.css"><link rel="stylesheet" href="https://dl.etna-alternance.net/sujets/sujet.css"><script type="text/javascript" src="https://dl.etna-alternance.net/sujets/prism.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script><script type="text/javascript" src="https://kit.fontawesome.com/2128552f47.js"></script><meta charset="UTF-8"></head><body><div class="panel-heading panel-header">ISR-RESA / Network your way out of the cave / 9 - Truth</div><div class="panel-heading panel-module">Modalités</div><div class="panel-body"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VM</td>
+<td>Votre VM <strong>C2WK-GNS3</strong> créée dans ETNA Cloud</td>
+</tr>
+<tr>
+<td>project</td>
+<td>step-9</td>
+</tr>
+<tr>
+<td>Correction</td>
+<td>Demande de validation</td>
+</tr>
+<tr>
+<td>Durée</td>
+<td>1 semaine</td>
+</tr>
+<tr>
+<td>Effectif</td>
+<td>Seul</td>
+</tr>
+<tr>
+<td>Environnement</td>
+<td>GNS3</td>
+</tr>
+<tr><td>Rendu</td><td>$$RENDU$$</td></tr></tbody></table>
+</div><div class="panel-heading panel-objective">Objectifs</div><div class="panel-body"><p>Configurer un server DHCP et recuperer des adresses ip dynamiquement dans un réseau complexe</p>
+</div><div class="panel-heading panel-info">Equipement nécesaire</div><div class="panel-body"><ul>
+<li>4 VPC</li>
+<li>3 router c3725</li>
+<li>3 switch</li>
+</ul>
+</div><div class="panel-heading undefined">Consignes</div><div class="panel-body"><p>Configurer <strong>R1</strong> :<br>a - son interface dans le sous-réseau <code>10.0.0.0/24</code> ait l'addresse ip : <code>10.0.0.254</code></p>
+<ul>
+<li>un server DHCP qui :<br>&nbsp;- distribue des ip dans la range <code>192.168.1.10 - 192.168.1.50</code> pour le sous-réseau <code>192.168.1.0/24</code><br>&nbsp;- distribue des ip dans la range <code>172.16.1.10 - 172.16.50.255</code> pour le sous-réseau <code>172.16.0.0/16</code></li>
+</ul>
+<p>Configurer <strong>R2</strong> :</p>
+<ul>
+<li>il doit router les paquets du sous-réseau <code>192.168.1.0/24</code> vers <code>10.0.0.0/24</code> et inversement</li>
+<li>son interface dans le sous-réseau <code>192.168.1.0/24</code> ait l'adresse ip : <code>192.168.1.254</code></li>
+<li>son interface dans le sous-réseau <code>10.0.0.0/24</code> ait l'adresse ip : <code>10.0.0.2</code></li>
+</ul>
+<p>Configurer <strong>R3</strong> :</p>
+<ul>
+<li>il doit router les paquets du sous-réseau <code>172.16.0.0/16</code> vers <code>10.0.0.0/24</code> et inversement</li>
+<li>son interface dans le sous-réseau <code>172.16.0.0/16</code> ait l'adresse ip : <code>172.16.255.254</code></li>
+<li>son interface dans le sous-réseau <code>10.0.0.0/24</code> ait l'adresse ip : <code>10.0.0.3</code></li>
+</ul>
+<p>Configurer <strong>PC1</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-réseau <code>192.168.1.0/24</code></li>
+<li>doit recuperer son adresse ip en <strong>DHCP</strong></li>
+</ul>
+<p>Configurer <strong>PC2</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-réseau <code>192.168.1.0/24</code></li>
+<li>doit recuperer son adress ip en <strong>DHCP</strong></li>
+</ul>
+<p>Configurer <strong>PC3</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-réseau <code>172.16.0.0/16</code></li>
+<li>doit recuperer son adresse ip en <strong>DHCP</strong></li>
+</ul>
+<p>Configurer <strong>PC3</strong>:</p>
+<ul>
+<li>doit se trouver dans le sous-réseau <code>172.16.0.0/16</code></li>
+<li>doit recuperer son adress ip en <strong>DHCP</strong></li>
+</ul>
+</div><div class="panel-heading undefined">Evaluation</div><div class="panel-body"><ul>
+<li><strong>PC1</strong>, <strong>PC2</strong>, <strong>PC3</strong> et <strong>PC4</strong> doivent pouvoir se ping mutuellement</li>
+</ul>
+</div><div class="panel-heading undefined">Rendu</div><div class="panel-body"><p>Déposez un screenshot de votre topologie GNS3 montrant les adresses ip obtenues en DHCP par les PCs ainsi que le résultat du ping de <strong>PC1</strong> vers <strong>PC3</strong> (ou <strong>PC4</strong>) dans le dossier <code>9 - truth/</code> de votre dépôt git avant de faire votre demande de validation sur l'intranet.</p></div><div class="panel-heading panel-warning">Attention</div><div class="panel-body"><p>Pensez à bien sauvegarder vos configurations.</p>
+</div><div class="panel-heading panel-question">And together acknowlegde the undivided truth</div><div class="panel-body"><p><em>Or would rather take Homer’s view, and “rather wish, in earthly life, to be the humble serf of a landless man” (Odyssey 11.489)</em></p>
+</div></body></html>

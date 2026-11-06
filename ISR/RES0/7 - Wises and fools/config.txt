@@ -1,0 +1,106 @@
+!Config R1
+configure terminal
+
+! 1. Interface WAN connectée au nuage NAT (DHCP)
+interface FastEthernet0/0
+ ip address dhcp
+ ip nat outside
+ no ip route-cache
+ no shutdown
+exit
+
+! 2. Interface LAN connectée au réseau central (10.0.0.0/24)
+interface FastEthernet0/1
+ ip address 10.0.0.254 255.255.255.0
+ ip nat inside
+ no ip route-cache
+ no shutdown
+exit
+
+! 3. Routes statiques vers les réseaux internes
+ip route 192.168.0.0 255.255.0.0 10.0.0.2
+ip route 172.16.1.0 255.255.255.0 10.0.0.3
+
+! 4. Liste d'accès 10 : Refuser 192.168.2.0/24 et autoriser le reste de 192.168.0.0/16
+access-list 10 deny 192.168.2.0 0.0.0.255
+access-list 10 permit 192.168.0.0 0.0.255.255
+
+! 5. Application du NAT (PAT) avec l'ACL 10
+ip nat inside source list 10 interface FastEthernet0/0 overload
+
+
+! 6. Route par défaut vers Internet
+ip route 0.0.0.0 0.0.0.0 192.168.122.1
+end
+write
+
+!Config R2
+configure terminal
+
+! 1. Interface vers le réseau central 10.0.0.0/24
+interface FastEthernet0/0
+ ip address 10.0.0.2 255.255.255.0
+ no shutdown
+exit
+
+! 2. Interface vers le réseau local 192.168.0.0/16
+interface FastEthernet0/1
+ ip address 192.168.255.254 255.255.0.0
+ no shutdown
+exit
+
+! 3. Route par défaut vers R1
+ip route 0.0.0.0 0.0.0.0 10.0.0.254
+
+! 4. Route vers le réseau de R3
+ip route 172.16.1.0 255.255.255.0 10.0.0.3
+
+end
+write
+
+!config R3
+configure terminal
+
+! 1. Interface vers le réseau central 10.0.0.0/24
+interface FastEthernet0/0
+ ip address 10.0.0.3 255.255.255.0
+ no shutdown
+exit
+
+! 2. Interface vers le réseau local 172.16.0.0/24
+interface FastEthernet0/1
+ ip address 172.16.1.254 255.255.255.0
+ no shutdown
+exit
+
+! 3. Route par défaut vers R1
+ip route 0.0.0.0 0.0.0.0 10.0.0.254
+
+! 4. Route vers le réseau de R2
+ip route 192.168.0.0 255.255.255.0 10.0.0.2
+end
+write
+
+!config PC1
+ip 192.168.1.11/16 192.168.255.254
+save
+
+!config PC2
+ip 192.168.3.12/16 192.168.255.254
+save
+
+!config PC3
+ip 172.16.1.13/24 172.16.1.254
+save
+
+!config PC4
+ip 172.16.1.14/24 172.16.1.254
+save
+
+!config PC5
+ip 192.168.2.15/16 192.168.255.254
+save
+
+!config PC6
+ip 192.168.2.16/16 192.168.255.254
+save

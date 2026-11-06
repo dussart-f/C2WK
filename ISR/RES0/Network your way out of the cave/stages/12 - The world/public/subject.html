@@ -1,0 +1,60 @@
+<html><head><title>ISR-RESA / Network your way out of the cave / 12 - The world</title><link rel="stylesheet" href="https://dl.etna-alternance.net/sujets/prism.css"><link rel="stylesheet" href="https://dl.etna-alternance.net/sujets/sujet.css"><script type="text/javascript" src="https://dl.etna-alternance.net/sujets/prism.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script><script type="text/javascript" src="https://kit.fontawesome.com/2128552f47.js"></script><meta charset="UTF-8"></head><body><div class="panel-heading panel-header">ISR-RESA / Network your way out of the cave / 12 - The world</div><div class="panel-heading panel-module">Modalités</div><div class="panel-body"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VM</td>
+<td>Votre VM <strong>C2WK-GNS3</strong> créée dans ETNA Cloud</td>
+</tr>
+<tr>
+<td>project</td>
+<td>step-12</td>
+</tr>
+<tr>
+<td>Correction</td>
+<td>Soutenance</td>
+</tr>
+<tr>
+<td>Durée</td>
+<td>1 semaine</td>
+</tr>
+<tr>
+<td>Effectif</td>
+<td>Seul</td>
+</tr>
+<tr>
+<td>Environnement</td>
+<td>GNS3</td>
+</tr>
+<tr><td>Rendu</td><td>$$RENDU$$</td></tr></tbody></table>
+</div><div class="panel-heading panel-objective">Objectifs</div><div class="panel-body"><p>Mettre en application tout ce que vous avez appris dans les étapes précedente et fabriquer une topology de réseau complexe</p>
+</div><div class="panel-heading undefined">Consignes</div><div class="panel-body"><p>Créez un réseau pour acceuilir plusieurs groupe de machines:</p>
+<p>Groupe "Staff":</p>
+<ul>
+<li>font partie du sous-réseau <code>172.16.0.0/16</code></li>
+<li>ont acces a internet</li>
+</ul>
+<p>Groupe "Student-A":</p>
+<ul>
+<li>font partie du sous-réseau <code>192.168.1.0/24</code></li>
+<li>ont acces a internet</li>
+</ul>
+<p>Groupe "Student-B":</p>
+<ul>
+<li>font partie du sous-réseau <code>192.168.2.0/24</code></li>
+<li>ont acces a internet</li>
+</ul>
+<p>Groupe "Student-Punis":</p>
+<ul>
+<li>font partie du sous-réseau <code>192.168.1.0/24</code></li>
+<li>n'ont pas accès a internet</li>
+</ul>
+<p>Tout les sous-réseau a l'exception des "Student-Punis" doivent pouvoir se connecter depuis n'importque quel switch "publique" de l'infrastructure configurer correctement pour les bon VLANs (a vous de choisir quels switch sont "publiques" dans votre infrastructure).</p>
+<p>Le sous-réseaux des "Student-Punis" doit être configuré à l'aide de la combinaison d'un switch et d'un router.</p>
+<p>Toute les machines doivent récuperer leur adresse ip aupres d'un unique server <strong>DHCP</strong><br>Vous ne devez avoir dans votre topology qu'une seul node <strong>NAT</strong></p>
+</div><div class="panel-heading undefined">Rendu</div><div class="panel-body"><p>Déposez un screenshot de votre topologie GNS3 complète montrant la connectivité internet d'un PC du groupe "Staff" ou "Student-A"/"Student-B" et l'absence de connectivité internet pour un PC "Student-Punis" dans le dossier <code>12 - the-world/</code> de votre dépôt git avant de faire votre demande de validation sur l'intranet.</p></div><div class="panel-heading panel-warning">Attention</div><div class="panel-body"><p>Pensez à bien sauvegarder vos configurations.</p>
+</div><div class="panel-heading panel-question">With time each will grow accustomed to the wonders of the world</div><div class="panel-body"><p><em>What our message now signifies is that the ability and means of learning is already present in the soul. As the eye could not turn from darkness to light unless the whole body moved, so it is that the mind can only turn around from the world of becoming to that of Being by a movement of the whole soul. The soul must learn, by degrees, to endure the contemplation of Being and the luminous realms. This is the Good, agreed?</em></p>
+</div></body></html>

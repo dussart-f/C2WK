@@ -1,0 +1,84 @@
+
+! Config R1
+configure terminal
+
+! 1. Interface WAN connectée au NAT (DHCP)
+interface FastEthernet0/0
+ ip address dhcp
+ ip nat outside
+ no ip route-cache
+ no shutdown
+exit
+
+! 2. Interface LAN connectée au réseau central (10.0.0.0/24)
+interface FastEthernet0/1
+ ip address 10.0.0.254 255.255.255.0
+ ip nat inside
+ no ip route-cache
+ no shutdown
+exit
+
+! 3. Routes statiques vers les réseaux internes
+ip route 192.168.1.0 255.255.255.0 10.0.0.2
+ip route 172.16.0.0 255.255.0.0 10.0.0.3
+
+! 4. Liste d'accès 10 : Autoriser uniquement 192.168.1.0/24 vers Internet
+access-list 10 permit 192.168.1.0 0.0.0.255
+
+! 5. Application de la NAT (PAT) en utilisant l'ACL 10
+ip nat inside source list 10 interface FastEthernet0/0 overload
+
+! 6. Route par défaut vers Internet
+ip route 0.0.0.0 0.0.0.0 192.168.122.1
+end
+write
+
+! Config R2
+configure terminal
+
+interface FastEthernet0/0
+ ip address 10.0.0.2 255.255.255.0
+ no shutdown
+exit
+
+interface FastEthernet0/1
+ ip address 192.168.1.254 255.255.255.0
+ no shutdown
+exit
+
+ip route 0.0.0.0 0.0.0.0 10.0.0.254
+end
+write
+
+! Config R3
+configure terminal
+
+interface FastEthernet0/0
+ ip address 10.0.0.3 255.255.255.0
+ no shutdown
+exit
+
+interface FastEthernet0/1
+ ip address 172.16.255.254 255.255.0.0
+ no shutdown
+exit
+
+ip route 0.0.0.0 0.0.0.0 10.0.0.254
+end
+write
+
+! Config PC1
+ip 192.168.1.11/24 192.168.1.254
+save
+
+! Config PC2
+ip 192.168.1.12/24 192.168.1.254
+save
+
+! Config PC3
+ip 172.16.1.13/16 172.16.255.254
+save
+
+! Config PC4
+ip 172.16.1.14/16 172.16.255.254
+save

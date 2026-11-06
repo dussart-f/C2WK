@@ -1,0 +1,41 @@
+<html><head><title>ISR-RESA / Network your way out of the cave</title><link rel="stylesheet" href="https://dl.etna-alternance.net/sujets/prism.css"><link rel="stylesheet" href="https://dl.etna-alternance.net/sujets/sujet.css"><script type="text/javascript" src="https://dl.etna-alternance.net/sujets/prism.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script><script type="text/javascript" src="https://kit.fontawesome.com/2128552f47.js"></script><meta charset="UTF-8"></head><body><div class="panel-heading panel-header">ISR-RESA / Network your way out of the cave</div><div class="panel-heading panel-module">Modalités</div><div class="panel-body"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VM</td>
+<td>Votre VM <strong>C2WK-GNS3</strong> créée dans ETNA Cloud</td>
+</tr>
+<tr>
+<td>Correction</td>
+<td>Demande de validation</td>
+</tr>
+<tr>
+<td>Durée</td>
+<td>1 semaine</td>
+</tr>
+<tr>
+<td>Effectif</td>
+<td>Seul</td>
+</tr>
+<tr>
+<td>Environnement</td>
+<td>GNS3</td>
+</tr>
+</tbody></table>
+</div><div class="panel-heading panel-objective">Objectifs</div><div class="panel-body"><p>Dans ce quest vous allez découvrir les bases du réseau au travers de l'émulateur GNS3.<br>Vous devez instancier votre propre VM GNS3 via le <strong>one-click deployment C2WK-GNS3</strong> disponible dans <strong>ETNA Cloud</strong>. C'est sur cette VM que vous devrez effectuer vos étapes, et c'est sur celle-ci que vous serez évalué.</p>
+<p>Vous devrez pour chaque étape crée un nouveau projet pour réaliser l'infrastructure demandé.</p>
+<p>Tous les équipements nécessaire à la réalisation des étapes sont déja présente sur les VMs pas besoin d'en installer des supplémentaire.</p>
+</div><div class="panel-heading panel-project">Setup</div><div class="panel-body"><div class="panel-heading panel-forbidden">Pas besoin d'installer le server GNS3</div><div class="panel-body"><p>Instanciez votre VM <strong>C2WK-GNS3</strong> depuis <strong>ETNA Cloud</strong> via le one-click deployment. Cette VM embarque un serveur GNS3 v2.2.49 accessible sur le <strong>port 80</strong> — pas besoin d'installation locale d'un serveur GNS3.</p>
+</div><div class="panel-heading undefined">Installation du client graphique</div><div class="panel-body"><p>Cependant vous devez installer un client graphique pour vous connecter a la VM qui vous est fournis</p>
+<p><a target="_blank" href="https://github.com/GNS3/gns3-gui/releases/tag/v2.2.49" title="undefined">https://github.com/GNS3/gns3-gui/releases/tag/v2.2.49</a></p>
+<p>Suivez les instructions d'installations spécifique a votre plateforme en vous assurant d'installer uniquement les morceau requis pour le client graphique. Faites vous aider de vos assets pour cette étape.</p>
+</div><div class="panel-heading undefined">Connexion a la VM</div><div class="panel-body"><p>Dans <strong>Edit</strong> &gt; <strong>preferences</strong> &gt; <strong>Server</strong>:</p>
+<ul>
+<li>Décocher la case d'activation du server local si ce n'est pas déja le cas</li>
+<li>Dans <strong>Remote main server</strong><br>&nbsp;- <strong>Protocol</strong> : HTTP<br>&nbsp;- <strong>Host</strong> : l'address ip de votre VM<br>&nbsp;- <strong>Port</strong> : 80 TCP<br>&nbsp;- <strong>Auth</strong> : [X]<br>&nbsp;- <strong>User</strong> : gns3<br>&nbsp;- <strong>Password</strong> : gns3</li>
+</ul>
+</div></div></body></html>
