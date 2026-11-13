@@ -1,0 +1,49 @@
+sudo apt-get update
+sudo apt-get install -y nginx libmodsecurity3 libmodsecurity-dev modsecurity-crs git curl
+
+# Copiez le fichier de configuration recommandé pour ModSecurity
+sudo cp /etc/modsecurity/modsecurity.conf-recommended /etc/modsecurity/modsecurity.conf
+
+# Modifiez ce fichier pour basculer ModSecurity du mode de surveillance
+sudo nano /etc/modsecurity/modsecurity.conf
+
+#in file 
+SecRuleEngine On
+
+# Configurer Nginx comme Reverse Proxy WAF
+sudo apt install -y libnginx-mod-http-modsecurity
+sudo nano /etc/nginx/nginx.conf
+#in file
+load_module modules/ngx_http_modsecurity_module.so;
+
+#Créez un fichier de configuration pour notre site protégé
+sudo nano /etc/nginx/sites-available/waf-proxy
+
+#in file 
+server {
+    listen 80;
+    server_name etna.nx;
+
+    # Activation de ModSecurity pour ce bloc
+    modsecurity on;
+    modsecurity_rules_file /etc/modsecurity/modsecurity.conf;
+
+    location / {
+        # Redirection du trafic vers le véritable serveur web protégé
+        proxy_pass http://192.168.30.10;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+
+# Activez le site et désactivez le site par défaut
+sudo ln -s /etc/nginx/sites-available/waf-proxy /etc/nginx/sites-enabled/
+sudo rm /etc/nginx/sites-enabled/default
+
+#Intégrer les règles OWASP Core Rule Set (CRS)
+sudo nano /etc/nginx/modsec_includes.conf
+
+#in file
+include /etc/modsecurity/modsecurity.conf
+include /usr/share/modsecurity-crs/owasp-crs.load

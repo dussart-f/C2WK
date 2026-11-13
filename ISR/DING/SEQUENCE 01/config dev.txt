@@ -1,0 +1,18 @@
+# config dev.etan.nx
+sudo nano /etc/network/interfaces
+
+# IN FILE
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# Static config for ens4
+auto ens4
+iface ens4 inet static
+        address 192.168.10.100
+        netmask 255.255.255.0
+        gateway 192.168.10.1
+
+# changement du nom host
+sudo nano /etc/hostname
+sudo nano /etc/hosts

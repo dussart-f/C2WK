@@ -1,0 +1,9 @@
+#config Prod
+
+# Autoriser le trafic local et les flux déjà établis (réponses)
+sudo iptables -A INPUT -i lo -j ACCEPT
+sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# Flux Web publics (Accessibles depuis Internet ou l'ensemble des réseaux)
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT   # HTTP
+sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT  # HTTPS

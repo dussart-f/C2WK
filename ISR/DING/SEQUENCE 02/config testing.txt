@@ -1,0 +1,14 @@
+#config Testing
+
+# Autoriser le trafic local et les flux déjà établis (réponses)
+sudo iptables -A INPUT -i lo -j ACCEPT
+sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# Flux d'administration (SSH strict depuis le réseau DEV uniquement)
+sudo iptables -A INPUT -p tcp --dport 22 -s 192.168.10.0/24 -j ACCEPT
+
+# Autoriser les tests de compatibilité depuis la DMZ
+sudo iptables -A INPUT -p tcp --dport 80 -s 192.168.30.0/24 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 443 -s 192.168.30.0/24 -j ACCEPT
+
+sudo iptables -A INPUT -j DROP # Bloquer tout le reste

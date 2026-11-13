@@ -1,0 +1,36 @@
+nano ~/.ssh/config
+
+# Configuration de la passerelle (Routeur Debian)
+Host routeur-gateway
+    HostName 192.168.122.143
+    User debian
+
+# Serveur Dev
+Host srv-dev
+    HostName 192.168.10.100
+    User debian
+    ProxyJump routeur-gateway
+
+# Serveur Administratif
+Host srv-admin
+    HostName 192.168.20.100
+    User debian
+    ProxyJump routeur-gateway
+
+# Serveur Web DMZ
+Host web-dmz
+    HostName 192.168.30.100
+    User debian
+    ProxyJump routeur-gateway
+
+# Serveur de Recette
+Host web-test
+    HostName 192.168.40.100
+    User debian
+    ProxyJump routeur-gateway
+
+# Serveur des Services Communs
+Host srv-sc
+    HostName 192.168.50.100
+    User debian
+    ProxyJump routeur-gateway

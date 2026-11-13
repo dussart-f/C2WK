@@ -1,0 +1,211 @@
+
+#Config common
+
+# Autoriser le trafic local et les flux déjà établis (réponses)
+sudo iptables -A INPUT -i lo -j ACCEPT
+sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# Autoriser le DNS (UDP/TCP 53) pour tout le monde
+sudo iptables -A INPUT -p udp --dport 53 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 53 -j ACCEPT
+
+# Autoriser l'annuaire LDAP (port 389 ou 636) pour le réseau Administratif
+sudo iptables -A INPUT -p tcp --dport 389 -s 192.168.20.0/24 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 636 -s 192.168.20.0/24 -j ACCEPT
+
+# Autoriser Samba (port 445) pour le réseau Administratif
+sudo iptables -A INPUT -p tcp --dport 445 -s 192.168.20.0/24 -j ACCEPT
+
+
+
+#DNS interne
+#Installation de BIND9
+sudo apt install -y bind9 bind9utils dnsutils
+
+# Configuration globale (named.conf.options)
+cat << 'EOF' > /etc/bind/named.conf.options
+options {
+    directory "/var/cache/bind";
+
+    // Transférer les requêtes Internet vers un DNS public (ex: Cloudflare / Google)
+    forwarders {
+        1.1.1.1;
+        8.8.8.8;
+    };
+
+    dnssec-validation auto;
+
+    listen-on { any; };
+    listen-on-v6 { any; };
+
+    allow-query { any; };
+    recursion yes;
+};
+EOF
+
+# Déclaration des zones dans named.conf.local
+cat << 'EOF' > /etc/bind/named.conf.local
+// Zone directe pour etna.nx
+zone "etna.nx" {
+    type master;
+    file "/etc/bind/db.etna.nx";
+};
+
+// Zone inversée pour le réseau 192.168.x.0/24 (basée sur 192.168.x)
+zone "50.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.192.168.50";
+};
+
+zone "40.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.192.168.40";
+};
+
+zone "30.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.192.168.30";
+};
+
+zone "20.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.192.168.20";
+};
+
+zone "10.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.192.168.10";
+};
+EOF
+
+# Création du fichier de zone directe (db.etna.nx)
+cat << 'EOF' > /etc/bind/db.etna.nx
+$TTL    86400
+@   IN  SOA ns1.etna.nx. root.etna.nx. (
+        2026111001 ; Serial
+        3600       ; Refresh
+        1800       ; Retry
+        604800     ; Expire
+        86400 )    ; Minimum TTL
+
+@   IN  NS  ns1.etna.nx.
+
+; --- Résolution des machines du réseau ---
+ns1     IN  A   192.168.50.100
+srv-sc  IN  A   192.168.50.100
+
+; Réseau Admin
+srv-admin IN  A   192.168.20.100
+
+; Réseau DMZ
+web-dmz   IN  A   192.168.30.100
+
+; Réseau Test
+web-test   IN  A   192.168.40.100
+
+; Réseau Dev
+dev-pc    IN  A   192.168.10.100
+EOF
+
+# Création du fichier de zone inversée (db.192.168.50)
+cat << 'EOF' > /etc/bind/db.192.168.50
+$TTL    86400
+@   IN  SOA ns1.etna.nx. root.etna.nx. (
+        2026111001 ; Serial
+        3600       ; Refresh
+        1800       ; Retry
+        604800     ; Expire
+        86400 )    ; Minimum TTL
+
+@   IN  NS  ns1.etna.nx.
+
+; --- Résolutions inverses (PTR) ---
+100  IN  PTR ns1.etna.nx.
+100  IN  PTR srv-sc.etna.nx.
+;
+EOF
+
+# Création du fichier de zone inversée (db.192.168.40)
+cat << 'EOF' > /etc/bind/db.192.168.40
+$TTL    86400
+@   IN  SOA ns1.etna.nx. root.etna.nx. (
+        2026111001 ; Serial
+        3600       ; Refresh
+        1800       ; Retry
+        604800     ; Expire
+        86400 )    ; Minimum TTL
+
+@   IN  NS  ns1.etna.nx.
+
+; --- Résolutions inverses (PTR) ---
+100  IN  PTR web-test.etna.nx.
+;
+EOF
+
+# Création du fichier de zone inversée (db.192.168.30)
+cat << 'EOF' > /etc/bind/db.192.168.30
+$TTL    86400
+@   IN  SOA ns1.etna.nx. root.etna.nx. (
+        2026111001 ; Serial
+        3600       ; Refresh
+        1800       ; Retry
+        604800     ; Expire
+        86400 )    ; Minimum TTL
+
+@   IN  NS  ns1.etna.nx.
+
+; --- Résolutions inverses (PTR) ---
+100  IN  PTR web-dmz.etna.nx.
+;
+EOF
+
+# Création du fichier de zone inversée (db.192.168.20)
+cat << 'EOF' > /etc/bind/db.192.168.20
+$TTL    86400
+@   IN  SOA ns1.etna.nx. root.etna.nx. (
+        2026111001 ; Serial
+        3600       ; Refresh
+        1800       ; Retry
+        604800     ; Expire
+        86400 )    ; Minimum TTL
+
+@   IN  NS  ns1.etna.nx.
+
+; --- Résolutions inverses (PTR) ---
+100  IN  PTR srv-admin.etna.nx.
+;
+EOF
+
+# Création du fichier de zone inversée (db.192.168.10)
+cat << 'EOF' > /etc/bind/db.192.168.10
+$TTL    86400
+@   IN  SOA ns1.etna.nx. root.etna.nx. (
+        2026111001 ; Serial
+        3600       ; Refresh
+        1800       ; Retry
+        604800     ; Expire
+        86400 )    ; Minimum TTL
+
+@   IN  NS  ns1.etna.nx.
+
+; --- Résolutions inverses (PTR) ---
+100  IN  PTR dev-pc.etna.nx.
+;
+EOF
+
+# Vérification et Redémarrage du service
+named-checkconf
+named-checkzone etna.nx /etc/bind/db.etna.nx
+
+systemctl restart bind9
+systemctl enable bind9
+
+
+# Bien sur rajouter la configuration DNS dans les interface des autre Debians
+sudo nano /etc/network/interfaces
+auto ens4
+iface ens4 inet static
+        address 192.168.10.100
+        netmask 255.255.255.0
+        gateway 192.168.10.1
+        dns-nameservers 192.168.50.100 8.8.8.8
